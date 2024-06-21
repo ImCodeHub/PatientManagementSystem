@@ -41,8 +41,13 @@ public class PatientServiceImpl implements PatientService {
                 patientModel.setId(patient.getId());
                 patientModel.setFirstName(patient.getFirstName());
                 patientModel.setLastName(patient.getLastName());
+                patientModel.setDateOfBirth(patient.getDateOfBirth());
+                patientModel.setGender(patient.getGender());
+                patientModel.setContactNumber(patient.getContactNumber());
+                patientModel.setEmail(patient.getEmail());
                 patientModel.setAddress(patient.getAddress());
-
+                
+                // add in the List of PatientModel line 34.
                 list.add(patientModel);
             }
             return list;
@@ -59,6 +64,13 @@ public class PatientServiceImpl implements PatientService {
             PatientModel patientModel = new PatientModel();
             patientModel.setId(patient.getId());
             patientModel.setFirstName(patient.getFirstName());
+            patientModel.setLastName(patient.getLastName());
+            patientModel.setDateOfBirth(patient.getDateOfBirth());
+            patientModel.setGender(patient.getGender());
+            patientModel.setContactNumber(patient.getContactNumber());
+            patientModel.setEmail(patient.getEmail());
+            patientModel.setAddress(patient.getAddress());
+
             list.add(patientModel);
             return list;
         } else {
@@ -72,9 +84,16 @@ public class PatientServiceImpl implements PatientService {
         Optional<Patient> optional = patientRepository.findById(id);
         if (optional.isPresent()) {
             Patient patient = optional.get();
-            logger.info("patient change {}", patientModel.getFirstName());
+            logger.info("patient details to change {}", patientModel.getFirstName());
 
             patient.setFirstName(patientModel.getFirstName());
+            patient.setLastName(patientModel.getLastName());
+            patient.setDateOfBirth(patientModel.getDateOfBirth());
+            patient.setGender(patientModel.getGender());
+            patient.setContactNumber(patientModel.getContactNumber());
+            patient.setEmail(patientModel.getEmail());
+            patient.setAddress(patientModel.getAddress());
+
             patientRepository.save(patient);
             return true;
         } else {
