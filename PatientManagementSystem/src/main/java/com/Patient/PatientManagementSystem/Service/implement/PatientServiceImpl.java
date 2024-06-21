@@ -13,6 +13,7 @@ import com.Patient.PatientManagementSystem.Entity.Patient;
 import com.Patient.PatientManagementSystem.Model.PatientModel;
 import com.Patient.PatientManagementSystem.Repository.PatientRepository;
 import com.Patient.PatientManagementSystem.Service.PatientService;
+import com.Patient.PatientManagementSystem.Service.Validation.Validator;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -22,8 +23,21 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private Validator validator;
+
     @Override
     public String savePatient(Patient patient) {
+        String email = patient.getEmail();
+
+        if(!validator.isValidEmail(email)){
+            logger.error("Email format is not valid for : {}",email);
+            return "email is wrong";
+        }
+        if(!validator.isEmailUnique(email)){
+            logger.error("email is already exist: {}", email);
+            return "email is already exist.";
+        }
         logger.info("patient saved {}", patient);
         patientRepository.save(patient);
         return "patient saved successfully.";
