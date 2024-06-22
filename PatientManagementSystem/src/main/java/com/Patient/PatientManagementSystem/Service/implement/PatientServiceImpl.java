@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Patient.PatientManagementSystem.Entity.Patient;
+import com.Patient.PatientManagementSystem.Exception.CustomException.EmailAlreadyExistException;
+import com.Patient.PatientManagementSystem.Exception.CustomException.InvalidEmailException;
+import com.Patient.PatientManagementSystem.Exception.CustomException.PatientNotFoundException;
 import com.Patient.PatientManagementSystem.Model.PatientModel;
 import com.Patient.PatientManagementSystem.Repository.PatientRepository;
 import com.Patient.PatientManagementSystem.Service.PatientService;
@@ -32,11 +35,11 @@ public class PatientServiceImpl implements PatientService {
 
         if(!validator.isValidEmail(email)){
             logger.error("Email format is not valid for : {}",email);
-            return "email is wrong";
+            throw new InvalidEmailException("Email is invalid kinldy Enter valid E-mail id");
         }
         if(!validator.isEmailUnique(email)){
             logger.error("email is already exist: {}", email);
-            return "email is already exist.";
+            throw new EmailAlreadyExistException("Email is already exist");
         }
         logger.info("patient saved {}", patient);
         patientRepository.save(patient);
@@ -66,7 +69,7 @@ public class PatientServiceImpl implements PatientService {
             }
             return list;
         }
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPatient'");
+        throw new PatientNotFoundException("Patient Not found/Empty");
     }
 
     @Override
@@ -89,7 +92,7 @@ public class PatientServiceImpl implements PatientService {
             return list;
         } else {
 
-            throw new UnsupportedOperationException("Unimplemented method 'getPatient'");
+            throw new PatientNotFoundException("Patient Not found/Empty by this id: "+id);
         }
     }
 
@@ -111,7 +114,7 @@ public class PatientServiceImpl implements PatientService {
             patientRepository.save(patient);
             return true;
         } else {
-            throw new UnsupportedOperationException("Unimplemented method 'updatePatient'");
+            throw new PatientNotFoundException("Patient Not found/Empty by this id: "+id);
         }
     }
 
@@ -123,7 +126,7 @@ public class PatientServiceImpl implements PatientService {
             patientRepository.deleteById(id);
             return true;
         } else {
-            throw new UnsupportedOperationException("Unimplemented method 'deletePatient'");
+            throw new PatientNotFoundException("Patient Not found/Empty by this id: "+id);
         }
     }
 
