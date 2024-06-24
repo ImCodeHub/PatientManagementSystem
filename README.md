@@ -1,6 +1,6 @@
 # `Patient Management System`
 
-A Spring Boot application for managing `Patient`, including adding, updating, deleting, and fetching Patient details. follows all the CRUD Operations and primerily focus area of this project is [UNIT TESTING]((https://github.com/ImCodeHub/PatientManagementSystem/blob/main/README.md#testing)) and Global Exception handling with Junit and mockito.
+A Spring Boot application for managing `Patient`, including adding, updating, deleting, and fetching Patient details. follows all the CRUD Operations and primerily focus area of this project is [UNIT TESTING](https://github.com/ImCodeHub/PatientManagementSystem/blob/main/README.md#testing) and Global Exception handling with Junit and mockito.
 
 ## Table of Contents
 - [Introduction](#introduction)
