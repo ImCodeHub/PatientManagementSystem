@@ -10,6 +10,7 @@ A Spring Boot application for managing `Patient`, including adding, updating, de
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [Testing](#testing)
+- [To contact me](#To-contact-me)
 
 ## Introduction 
   The Patient Management System is a RESTful web service built using Spring Boot. It provides APIs to manage doctor information, including operations like adding, updating, deleting, and fetching doctor details.
@@ -86,7 +87,7 @@ You can use tools like [Postman](https://www.postman.com/) to interact with the 
 
 ![image](https://github.com/ImCodeHub/DoctorManagementSystemDemo/assets/98458146/654c45d5-ba10-44b8-a922-d544b7e640cc)
 
-# API Endpoint
+# API Endpoints
 ### Create a new patient
   - URL: /api/v1/savePatient
   - Method: `POST`
@@ -122,7 +123,66 @@ You can use tools like [Postman](https://www.postman.com/) to interact with the 
 ![image](https://github.com/ImCodeHub/DoctorManagementSystemDemo/assets/98458146/2ca02b92-a077-41d9-a6ff-4a29ba2d14ed)
 
 #### Unit testing screen short
-
+### Testing
 ![Screenshot (1160)](https://github.com/ImCodeHub/DoctorManagementSystemDemo/assets/98458146/3dc10fa2-0fd4-4aba-a3dc-468307c8eb83)
 
 #### You can see the Unit testing code at [Click Here](https://github.com/ImCodeHub/PatientManagementSystem/blob/main/PatientManagementSystem/src/test/java/com/Patient/PatientManagementSystem/Service/implement/PatientServiceImplTest.java)
+
+```java
+    public class PatientServiceImplTest {
+    
+        @Mock
+        private PatientRepository patientRepository;
+    
+        @Mock
+        private Validator validator;
+    
+        @InjectMocks
+        private PatientServiceImpl patientServiceImpl;
+    
+        Patient patient;
+    
+        AutoCloseable autoCloseable;
+    
+        @BeforeEach
+        void setUp() {
+            autoCloseable = MockitoAnnotations.openMocks(this);
+            patient = new Patient();
+            patient.setFirstName("Ankit");
+            patient.setLastName("sharma");
+            patient.setDateOfBirth(LocalDate.of(1993, 11, 24));
+            patient.setGender("male");
+            patient.setContactNumber("1236547894");
+            patient.setEmail("ankit@gmail.com");
+            patient.setAddress("Indore");
+    
+        }
+    
+        @AfterEach
+        void tearDown() throws Exception {
+            autoCloseable.close();
+        }
+    
+        @Test
+        void testSavePatient() {
+            String email = patient.getEmail();
+    
+            when(validator.isValidEmail(email)).thenReturn(true);
+            when(validator.isEmailUnique(email)).thenReturn(true);
+            when(patientRepository.save(patient)).thenReturn(patient);
+    
+            String result = patientServiceImpl.savePatient(patient);
+            assertEquals("patient saved successfully.", result);
+            verify(patientRepository, times(1)).save(patient);
+        }
+    }
+```
+---
+# To contact me:
+   - name: Ankit sharma
+   - mobile no: 8962780856
+   - E-mail id: ankitsharma.as420@gmail.com
+   - My [Linked In](https://www.linkedin.com/in/ankit-sharma-a6689b1a5/) Profile.
+     
+**To see My other projects** [click here](https://github.com/ImCodeHub?tab=repositories)
+
